@@ -49,6 +49,7 @@ footer{text-align:center;color:var(--mu);padding:20px 16px 40px;font-size:.85rem
 .soon{border:2px dashed var(--ln);border-radius:18px;padding:26px;text-align:center;color:var(--mu)}
 @media(min-width:700px){.chips{flex-wrap:wrap;justify-content:center}}
 h3{margin:16px 4px 8px;font-size:1rem;color:var(--g2)}.chips:empty{display:none}#subs{margin-top:8px}.chip.s{font-size:.82rem;padding:6px 13px;background:var(--card);border:1px solid var(--ln)}.chip.s.on{background:var(--g2);color:#fff}
+.var{display:flex;gap:6px}.var button{flex:1;border:1px solid var(--ln);background:var(--bg);color:var(--tx);border-radius:99px;padding:6px 4px;font-weight:700;font-size:.82rem;cursor:pointer}.var button.on{background:var(--g2);color:#fff;border-color:var(--g2)}
 </style></head><body>
 <div class="top">🎁 Regalo sorpresa en compras desde S/ 50 · 🚚 Envíos a todo el Perú</div>
 <header><img src="img/logo.jpg" alt="La Despensa del Oso"></header>
@@ -66,7 +67,15 @@ const COMBOS=[
 ];
 const C={z:["Combos","🎁"],
 p:["Carnes vegetales","🥩",[
-["Soya texturizada",[23,24,31,32,19,20,27,28,21,22,29,30,17,18,25,26]],
+["Soya texturizada",[
+["Soya en tiras",["Pollo",23],["Res",24]],
+["Soya en trozos",["Pollo",19],["Res",20]],
+["Soya molida",["Pollo",21],["Res",22]],
+["Soya tipo filete",["Pollo",17],["Res",18]],
+["Soya en tiras",["Pollo",31],["Res",32]],
+["Soya en trozos",["Pollo",27],["Res",28]],
+["Soya molida",["Pollo",29],["Res",30]],
+["Soya tipo filete",["Pollo",25],["Res",26]]]],
 ["Bistec y gluten",[15,16]],
 ["Carne de arvejas",[12,11,13,14]],
 ["Hamburguesas y milanesas",[1,3,2]],
@@ -74,19 +83,22 @@ p:["Carnes vegetales","🥩",[
 ["Albóndigas",[5,10]],
 ["Nuggets",[4,9]]]],
 f:["Harinas, panes y pastas","🌾",[38,37,33,34,35]],
-b:["Bebidas vegetales","🥛",[40,41]],
 s:["Suplementos","💪",[]],
-d:["Postres","🧁",[42]],
-o:["Otros","🧂",[36,39]]};
+d:["Dulces, repostería y postres veganos","🧁",[39]],
+o:["Otros","🧂",[36]]};
 const subs=k=>Array.isArray(C[k][2]&&C[k][2][0])?C[k][2]:null;
-const ids=k=>subs(k)?subs(k).flatMap(s=>s[1]):(C[k][2]||[]);
+const gid=x=>typeof x=="number"?[x]:x.slice(1).map(v=>v[1]);
+const ids=k=>subs(k)?subs(k).flatMap(s=>s[1].flatMap(gid)):(C[k][2]||[]).flatMap(gid);
+const txt=x=>(typeof x=="number"?P[x-1].n+P[x-1].p:x[0]+x.slice(1).map(v=>v[0]).join("")+P[x[1][1]-1].p).toLowerCase();
+const SEL={};
+const gcard=g=>{const k=g[1][1],s=SEL[k]||k,p=P[s-1];return `<div class="card"><div class="art">${img(p)}</div><div class="bd"><div class="nm">${g[0]}</div><div class="var">${g.slice(1).map(v=>`<button class="${v[1]==s?"on":""}" data-g="${k}" data-v="${v[1]}">${v[0]}</button>`).join("")}</div><div class="pr">${p.p}</div><div class="row"><span class="price">${p.$?m(p.$):"Consultar"}</span>${ctl(p)}</div></div></div>`};
 const PR=[
 ["Hamburguesa de carne","390 g",25,"a"],["Milanesa","400 g",25,"a"],["Hamburguesa de pollo","400 g",25,"a"],["Nuggets","500 g",28,"a"],["Albóndigas","500 g",28,"a"],["Salchichas veganas clásicas","500 g",22,"a"],["Salchichas veganas con finas hierbas","500 g",23,"a"],["Chorizo vegano","350 g",19,"a"],["Nuggets","300 g",20,"a"],["Albóndigas","300 g",20,"a"],
 ["Carne de arvejas tipo nuggets","Bolsa 500 g",35,"b"],["Carne de arvejas tipo molida","Bolsa 500 g",35,"b"],["Carne de arvejas tipo nuggets","Bolsa 250 g",19,"b"],["Carne de arvejas tipo nuggets","Caja 100 g",10,"b"],
 ["Carne de soya y gluten tipo bistec","Bolsa 500 g",21,"c"],["Gluten de trigo","Bolsa 500 g",15,"c"],["Soya tipo filete pollo","Bolsa 500 g",15,"c"],["Soya tipo filete res","Bolsa 500 g",15,"c"],["Soya pollo trozos","Bolsa 500 g",14,"c"],["Soya res trozos","Bolsa 500 g",14,"c"],["Soya pollo molido","Bolsa 500 g",14,"c"],["Soya res molida","Bolsa 500 g",14,"c"],["Soya pollo tiras","Bolsa 500 g",14,"c"],["Soya res tiras","Bolsa 500 g",14,"c"],["Soya tipo filete pollo","Caja 100 g",6.5,"c"],["Soya tipo filete res","Caja 100 g",6.5,"c"],["Soya pollo trozos","Caja 150 g",6,"c"],["Soya res trozos","Caja 150 g",6,"c"],["Soya pollo molido","Caja 150 g",6,"c"],["Soya res molida","Caja 150 g",6,"c"],["Soya pollo tiras","Caja 150 g",6,"c"],["Soya res tiras","Caja 150 g",6,"c"],
 ["Fideos integrales de kiwicha","Caja 250 g",7,"d"],["Fideos integrales de espinaca","Caja 250 g",7,"d"],["Fideos integrales de pimiento","Caja 250 g",7,"d"],
 ["Sal negra","250 g",12,"e"],["Kañihua, harina seleccionada","Bolsa ziploc 200 g",9,"e"],["Harina de garbanzo","250 g",7,"e"],
-["Agar agar","Presentación a consultar",0,""],["Leche de almendras","1 litro",12.50,""],["Leche de avena","1 litro",10,""],["Alfajor argentino vegano","1 porción",6,""]
+["Agar agar","Presentación a consultar",0,""]
 ];
 const P=PR.concat(COMBOS.map(c=>[c[0],c[1],c[2],"z"])).map((p,i)=>({i,n:p[0],p:p[1],$:p[2],c:p[3]}));
 for(const k in C)ids(k).forEach(n=>P[n-1].c=k);
@@ -101,14 +113,15 @@ function img(p){const z=p.c=="z"?"combo-"+(p.i-PR.length+1):String(p.i+1).padSta
 const card=p=>`<div class="card"><div class="art">${img(p)}</div><div class="bd"><div class="nm">${p.n}</div><div class="pr">${p.p}</div><div class="row"><span class="price">${p.$?m(p.$):"Consultar"}</span>${ctl(p)}</div></div></div>`;
 function render(){let h="";for(const k in C){if(cat!="all"&&cat!=k)continue;
 const S=k=="z"?[[null,P.filter(p=>p.c=="z").map(p=>p.i+1)]]:(subs(k)||[[null,ids(k)]]);let body="";
-for(const[sn,list]of S){if(sub!="all"&&cat==k&&sn!=sub)continue;const L=list.map(n=>P[n-1]).filter(p=>(p.n+p.p).toLowerCase().includes(term));if(!L.length)continue;body+=(sn?`<h3>${sn}</h3>`:"")+`<div class="grid">${L.map(card).join("")}</div>`}
+for(const[sn,list]of S){if(sub!="all"&&cat==k&&sn!=sub)continue;const L=list.filter(x=>txt(x).includes(term));if(!L.length)continue;body+=(sn?`<h3>${sn}</h3>`:"")+`<div class="grid">${L.map(x=>typeof x=="number"?card(P[x-1]):gcard(x)).join("")}</div>`}
 if(body)h+=`<h2>${C[k][0]}</h2>`+body;else if(!term&&S.every(s=>!s[1].length))h+=`<h2>${C[k][0]}</h2><div class="soon">${C[k][1]} Muy pronto: ${k=="z"?"combos especiales para ti":"nuevos productos"}</div>`}
 $("list").innerHTML=h||"<p style='text-align:center;color:var(--mu)'>No encontramos ese producto.</p>";fab()}
 function tot(){let n=0,t=0;for(const i in cart){n+=cart[i];t+=cart[i]*P[i].$}return[n,t]}
 function fab(){const[n,t]=tot();const f=$("fab");f.style.display=n?"block":"none";f.textContent=`🛒 Ver pedido (${n}) · ${m(t)}`}
 function sheet(){const[n,t]=tot();$("items").innerHTML=Object.keys(cart).map(i=>`<div class="li"><span>${cart[i]} × ${P[i].n} <small>(${P[i].p})</small></span><b>${P[i].$?m(cart[i]*P[i].$):"Consultar"}</b></div>`).join("");$("tt").textContent=m(t);const f=MIN-t;$("gift").innerHTML=f>0?`🎁 Te faltan <b>${m(f)}</b> para tu regalo sorpresa<i><b style="width:${t/MIN*100}%"></b></i>`:`🎉 ¡Ya calificas para tu regalo sorpresa!<i><b style="width:100%"></b></i>`}
 document.addEventListener("click",e=>{const t=e.target;
-if(t.dataset.c){cat=t.dataset.c;sub="all";chips();render()}
+if(t.dataset.v){SEL[t.dataset.g]=+t.dataset.v;render()}
+else if(t.dataset.c){cat=t.dataset.c;sub="all";chips();render()}
 else if(t.dataset.s){sub=t.dataset.s;chips();render()}
 else if(t.dataset.a){cart[t.dataset.a]=(cart[t.dataset.a]||0)+1;render();if($("sheet").classList.contains("on"))sheet()}
 else if(t.dataset.m){const i=t.dataset.m;if(--cart[i]<=0)delete cart[i];render();if(!tot()[0])$("sheet").classList.remove("on");else sheet()}
