@@ -48,6 +48,9 @@ Guarda cada foto en `img/` con el número de su producto (`01.jpg`, `02.jpg`...)
 | 37.jpg | Kañihua, harina seleccionada - Bolsa ziploc 200 g |
 | 38.jpg | Harina de garbanzo - 250 g |
 | 39.jpg | Agar agar |
+| 40.jpg | Leche de almendras |
+| 41.jpg | Leche de avena |
+| 42.jpg | Alfajor argentino vegano |
 
 ## Combos
 En `index.html` busca `const COMBOS` y agrega líneas como:
