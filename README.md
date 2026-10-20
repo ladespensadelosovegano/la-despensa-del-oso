@@ -56,3 +56,8 @@ En `index.html` busca `const COMBOS` y agrega líneas como:
 ## Agregar productos nuevos
 1. En `index.html`, dentro de `const PR=[`, agrega al final una línea: `["Nombre","Presentación",precio,""],` (el producto 39 será `39.jpg`, el 40 `40.jpg`...).
 2. En `const C={`, agrega ese número a la lista de su categoría. Ejemplo: Suplementos `[39,40]`.
+
+## Subcategorías
+En `const C={`, una categoría con subcategorías se escribe así (cada subcategoría lleva su nombre y su lista de números):
+`p:["Carnes vegetales","🥩",[["Nuggets",[4,9]],["Albóndigas",[5,10]]]],`
+Una categoría simple lleva solo la lista de números: `o:["Otros","🧂",[36]],`
