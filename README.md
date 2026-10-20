@@ -47,7 +47,12 @@ Guarda cada foto en `img/` con el número de su producto (`01.jpg`, `02.jpg`...)
 | 36.jpg | Sal negra - 250 g |
 | 37.jpg | Kañihua, harina seleccionada - Bolsa ziploc 200 g |
 | 38.jpg | Harina de garbanzo - 250 g |
+| 39.jpg | Agar agar |
 
 ## Combos
 En `index.html` busca `const COMBOS` y agrega líneas como:
 `["Combo Burger Día","2 hamburguesas + 1 chorizo",60],`
+
+## Agregar productos nuevos
+1. En `index.html`, dentro de `const PR=[`, agrega al final una línea: `["Nombre","Presentación",precio,""],` (el producto 39 será `39.jpg`, el 40 `40.jpg`...).
+2. En `const C={`, agrega ese número a la lista de su categoría. Ejemplo: Suplementos `[39,40]`.
