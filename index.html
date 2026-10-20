@@ -64,11 +64,12 @@ const COMBOS=[
 // ["Combo Burger Día","2 hamburguesas de carne + 1 chorizo vegano",60],
 ];
 const C={z:["Combos","🎁"],
-p:["Proteína: carnes vegetales","🥩",[23,24,31,32,19,20,27,28,21,22,29,30,12,15,17,18,25,26,16,11,13,14]],
+p:["Carnes vegetales","🥩",[23,24,31,32,19,20,27,28,21,22,29,30,12,15,17,18,25,26,16,11,13,14]],
 h:["Hamburguesas y embutidos","🍔",[1,3,2,4,9,5,10,6,7,8]],
-f:["Harinas, panes y pastas","🌾",[38,37,33,34,35]],
+f:["Harinas, granos y pastas","🌾",[38,37,33,34,35]],
+b:["Bebidas vegetales","🥛",[40,41]],
 s:["Suplementos","💪",[]],
-d:["Dulces, repostería y postres veganos","🧁",[39]],
+d:["Repostería y postres","🧁",[39]],
 o:["Otros","🧂",[36]]};
 const PR=[
 ["Hamburguesa de carne","390 g",25,"a"],["Milanesa","400 g",25,"a"],["Hamburguesa de pollo","400 g",25,"a"],["Nuggets","500 g",28,"a"],["Albóndigas","500 g",28,"a"],["Salchichas veganas clásicas","500 g",22,"a"],["Salchichas veganas con finas hierbas","500 g",23,"a"],["Chorizo vegano","350 g",19,"a"],["Nuggets","300 g",20,"a"],["Albóndigas","300 g",20,"a"],
@@ -76,7 +77,7 @@ const PR=[
 ["Carne de soya y gluten tipo bistec","Bolsa 500 g",21,"c"],["Gluten de trigo","Bolsa 500 g",15,"c"],["Soya tipo filete pollo","Bolsa 500 g",15,"c"],["Soya tipo filete res","Bolsa 500 g",15,"c"],["Soya pollo trozos","Bolsa 500 g",14,"c"],["Soya res trozos","Bolsa 500 g",14,"c"],["Soya pollo molido","Bolsa 500 g",14,"c"],["Soya res molida","Bolsa 500 g",14,"c"],["Soya pollo tiras","Bolsa 500 g",14,"c"],["Soya res tiras","Bolsa 500 g",14,"c"],["Soya tipo filete pollo","Caja 100 g",6.5,"c"],["Soya tipo filete res","Caja 100 g",6.5,"c"],["Soya pollo trozos","Caja 150 g",6,"c"],["Soya res trozos","Caja 150 g",6,"c"],["Soya pollo molido","Caja 150 g",6,"c"],["Soya res molida","Caja 150 g",6,"c"],["Soya pollo tiras","Caja 150 g",6,"c"],["Soya res tiras","Caja 150 g",6,"c"],
 ["Fideos integrales de kiwicha","Caja 250 g",7,"d"],["Fideos integrales de espinaca","Caja 250 g",7,"d"],["Fideos integrales de pimiento","Caja 250 g",7,"d"],
 ["Sal negra","250 g",12,"e"],["Kañihua, harina seleccionada","Bolsa ziploc 200 g",9,"e"],["Harina de garbanzo","250 g",7,"e"],
-["Agar agar","Presentación a consultar",0,""]
+["Agar agar","Presentación a consultar",0,""],["Leche de almendras","1 litro",12.50,""],["Leche de avena","1 litro",10,""]
 ];
 const P=PR.concat(COMBOS.map(c=>[c[0],c[1],c[2],"z"])).map((p,i)=>({i,n:p[0],p:p[1],$:p[2],c:p[3]}));
 for(const k in C)(C[k][2]||[]).forEach(n=>P[n-1].c=k);
