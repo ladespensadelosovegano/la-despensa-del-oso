@@ -61,11 +61,24 @@ h3{margin:16px 4px 8px;font-size:1rem;color:var(--g2)}.chips:empty{display:none}
 .ft a.ln{display:block;color:#f7f3e8;text-decoration:none;margin:6px 0;word-break:break-word}
 .ft-b{background:#17391f;text-align:center;font-size:.8rem;padding:12px}
 @media(max-width:600px){.ft-in{grid-template-columns:1fr;text-align:center}.ft-logo img{margin:auto}.soc{justify-content:center}}
+.bar{position:static;border-bottom:0;padding:10px 12px 0}.bar input{margin-bottom:0}
+.navw{position:relative;padding:10px 12px;border-bottom:1px solid var(--ln)}
+#menu{display:none;position:absolute;left:12px;right:12px;top:100%;z-index:30;background:var(--card);border:1px solid var(--ln);border-radius:0 0 18px 18px;box-shadow:0 14px 30px #0003;padding:16px 20px;max-width:900px;margin:0 auto}
+#menu.on{display:block}
+.mt{font-weight:900;color:var(--g);margin-bottom:10px;text-transform:uppercase;font-size:.9rem}
+.ml{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:4px 18px}
+.ml a{padding:8px 6px;cursor:pointer;color:var(--tx);font-size:.95rem;border-radius:8px}.ml a:hover{background:var(--chip)}
+.ml a.all{color:var(--g2);font-weight:800;text-decoration:underline}
+.banner{background:var(--g);color:var(--bg);border-radius:18px;padding:26px 22px;margin:8px 0 0}.banner h1{margin:0;font-size:1.7rem}
+.bc{color:var(--mu);font-size:.85rem;margin:12px 4px}.bc a{cursor:pointer;text-decoration:underline}.bc span{color:var(--tx);font-weight:700}
+.tb{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin:6px 4px 12px;color:var(--mu);font-size:.85rem;font-weight:700}
+.tb select{border:0;background:transparent;color:var(--tx);font-weight:800;font-size:.9rem;cursor:pointer;font-family:inherit}
 </style></head><body>
 <div class="top">🎁 Regalo sorpresa en compras desde S/ 50 · 🚚 Envíos a todo el Perú</div>
 <header><img src="img/logo.jpg" alt="La Despensa del Oso"></header>
 <div class="hero"><h1>Catálogo de productos</h1><p>Tienda virtual · Envíos a todo el Perú.<br>Productos veganos en un solo lugar. Arma tu pedido y envíalo por WhatsApp.</p></div>
-<div class="bar"><input id="q" type="search" placeholder="Buscar producto…"><div class="chips" id="chips"></div><div class="chips" id="subs"></div></div>
+<div class="bar"><input id="q" type="search" placeholder="Buscar producto…"></div>
+<div class="navw"><div class="chips" id="chips"></div><div id="menu"></div></div>
 <main id="list"></main>
 <button id="fab"></button>
 <div id="sheet"><div class="box"><button class="x" id="cl">×</button><h2 style="margin-top:0">Tu pedido</h2><div id="items"></div><div class="gift" id="gift"></div><div class="tot"><span>Total</span><span id="tt"></span></div><input id="nom" placeholder="Tu nombre"><button class="wa" id="send">Enviar pedido por WhatsApp</button></div></div>
@@ -133,31 +146,43 @@ for(const k in C)ids(k).forEach(n=>P[n-1].c=k);
 const cart={};let cat="all",term="";
 const m=v=>"S/ "+v.toFixed(2);
 const $=id=>document.getElementById(id);
-let sub="all";
-function chips(){$("chips").innerHTML=[["all","Todos"],...Object.entries(C).map(([k,v])=>[k,v[0]])].map(([k,t])=>`<button class="chip ${k==cat?"on":""}" data-c="${k}">${t}</button>`).join("");
-$("subs").innerHTML=cat!="all"&&subs(cat)?[["all","Todas"],...subs(cat).map(s=>[s[0],s[0]])].map(([k,t])=>`<button class="chip s ${k==sub?"on":""}" data-s="${k}">${t}</button>`).join(""):""}
+let sub="all",ord="",menuOpen="";
+const pv=x=>{const p=typeof x=="number"?P[x-1]:P[(SEL[x[1][1]]||x[1][1])-1];return p.$||Infinity};
+const cmp=(a,b)=>{const A=pv(a),B=pv(b);if(A==B)return 0;if(A==Infinity)return 1;if(B==Infinity)return -1;return ord=="asc"?A-B:B-A};
+function nav(){$("chips").innerHTML=[["all","Todos"],...Object.entries(C).map(([k,v])=>[k,v[0]])].map(([k,n])=>`<button class="chip ${k==(menuOpen||cat)?"on":""}" data-c="${k}">${n}${k!="all"&&subs(k)?" ▾":""}</button>`).join("");
+const M=$("menu");M.className=menuOpen?"on":"";M.innerHTML=menuOpen?`<div class="mt">${C[menuOpen][0]}</div><div class="ml"><a class="all" data-mk="${menuOpen}" data-ms="all">Todas</a>${subs(menuOpen).map(s=>`<a data-mk="${menuOpen}" data-ms="${s[0]}">${s[0]}</a>`).join("")}</div>`:""}
 function ctl(p){const q=cart[p.i]||0;return q?`<div class="qty"><button data-m="${p.i}">−</button>${q}<button data-a="${p.i}">+</button></div>`:`<button class="add" data-a="${p.i}">Agregar</button>`}
 function img(p){const z=p.c=="z"?"combo-"+(p.i-PR.length+1):String(p.i+1).padStart(2,"0");return `<img src="img/${z}.jpg" alt="${p.n}" loading="lazy" onerror="if(!this.dataset.t){this.dataset.t=1;this.src='img/${z}.png'}else{this.parentNode.textContent='${C[p.c][1]}'}">`}
 const card=p=>`<div class="card"><div class="art">${img(p)}</div><div class="bd"><div class="nm">${p.n}</div><div class="pr">${p.p}</div><div class="row"><span class="price">${p.$?m(p.$):"Consultar"}</span>${ctl(p)}</div></div></div>`;
-function render(){let h="";for(const k in C){if(cat!="all"&&cat!=k)continue;
-const S=k=="z"?[[null,P.filter(p=>p.c=="z").map(p=>p.i+1)]]:(subs(k)||[[null,ids(k)]]);let body="";
-for(const[sn,list]of S){if(sub!="all"&&cat==k&&sn!=sub)continue;const L=list.filter(x=>txt(x).includes(term));if(!L.length)continue;body+=(sn?`<h3>${sn}</h3>`:"")+`<div class="grid">${L.map(x=>typeof x=="number"?card(P[x-1]):gcard(x)).join("")}</div>`}
-if(body)h+=`<h2>${C[k][0]}</h2>`+body;else if(!term&&S.every(s=>!s[1].length))h+=`<h2>${C[k][0]}</h2><div class="soon">${C[k][1]} Muy pronto: ${k=="z"?"combos especiales para ti":"nuevos productos"}</div>`}
+const secs=k=>k=="z"?[[null,P.filter(p=>p.c=="z").map(p=>p.i+1)]]:(subs(k)||[[null,ids(k)]]);
+const grid=L=>`<div class="grid">${L.map(x=>typeof x=="number"?card(P[x-1]):gcard(x)).join("")}</div>`;
+const filt=l=>{const L=l.filter(x=>txt(x).includes(term));if(ord)L.sort(cmp);return L};
+const soon=k=>`<div class="soon">${C[k][1]} Muy pronto: ${k=="z"?"combos especiales para ti":"nuevos productos"}</div>`;
+function render(){let h="";
+if(cat=="all"){for(const k in C){const S=secs(k);let b="";for(const[sn,l]of S){const L=filt(l);if(L.length)b+=(sn?`<h3>${sn}</h3>`:"")+grid(L)}
+if(b)h+=`<h2>${C[k][0]}</h2>`+b;else if(!term&&S.every(s=>!s[1].length))h+=`<h2>${C[k][0]}</h2>`+soon(k)}}
+else{const S=secs(cat),nm=C[cat][0],sh=sub=="all"?S:S.filter(s=>s[0]==sub);let b="",c=0;
+for(const[sn,l]of sh){const L=filt(l);c+=L.length;if(L.length)b+=(sn&&sub=="all"?`<h3>${sn}</h3>`:"")+grid(L)}
+if(!c&&S.every(s=>!s[1].length))b=soon(cat);
+const o=(v,n)=>`<option value="${v}"${ord==v?" selected":""}>${n}</option>`;
+h=`<div class="banner"><h1>${sub=="all"?nm:sub}</h1></div><div class="bc"><a data-bc="home">Inicio</a> › ${sub=="all"?`<span>${nm}</span>`:`<a data-bc="cat">${nm}</a> › <span>${sub}</span>`}</div><div class="tb"><span>${c} PRODUCTO${c==1?"":"S"}</span><label>ORDENAR POR <select id="ord">${o("","Relevancia")}${o("asc","Precio: de menor a mayor")}${o("desc","Precio: de mayor a menor")}</select></label></div>`+b}
 $("list").innerHTML=h||"<p style='text-align:center;color:var(--mu)'>No encontramos ese producto.</p>";fab()}
 function tot(){let n=0,t=0;for(const i in cart){n+=cart[i];t+=cart[i]*P[i].$}return[n,t]}
 function fab(){const[n,t]=tot();const f=$("fab");f.style.display=n?"block":"none";f.textContent=`🛒 Ver pedido (${n}) · ${m(t)}`}
 function sheet(){const[n,t]=tot();$("items").innerHTML=Object.keys(cart).map(i=>`<div class="li"><span>${cart[i]} × ${P[i].n} <small>(${P[i].p})</small></span><b>${P[i].$?m(cart[i]*P[i].$):"Consultar"}</b></div>`).join("");$("tt").textContent=m(t);const f=MIN-t;$("gift").innerHTML=f>0?`🎁 Te faltan <b>${m(f)}</b> para tu regalo sorpresa<i><b style="width:${t/MIN*100}%"></b></i>`:`🎉 ¡Ya calificas para tu regalo sorpresa!<i><b style="width:100%"></b></i>`}
-document.addEventListener("click",e=>{const t=e.target;
+document.addEventListener("click",e=>{const t=e.target;if(menuOpen&&!(t.closest&&t.closest(".navw"))){menuOpen="";nav()}
 if(t.dataset.v){SEL[t.dataset.g]=+t.dataset.v;render()}
-else if(t.dataset.c){cat=t.dataset.c;sub="all";chips();render()}
-else if(t.dataset.s){sub=t.dataset.s;chips();render()}
+else if(t.dataset.c){const k=t.dataset.c;if(k!="all"&&subs(k))menuOpen=menuOpen==k?"":k;else{cat=k;sub="all";ord="";menuOpen=""}nav();render()}
+else if(t.dataset.ms){cat=t.dataset.mk;sub=t.dataset.ms;ord="";menuOpen="";nav();render();$("list").scrollIntoView&&$("list").scrollIntoView({behavior:"smooth"})}
+else if(t.dataset.bc){cat=t.dataset.bc=="home"?"all":cat;sub="all";ord="";nav();render();$("list").scrollIntoView&&$("list").scrollIntoView({behavior:"smooth"})}
 else if(t.dataset.a){cart[t.dataset.a]=(cart[t.dataset.a]||0)+1;render();if($("sheet").classList.contains("on"))sheet()}
 else if(t.dataset.m){const i=t.dataset.m;if(--cart[i]<=0)delete cart[i];render();if(!tot()[0])$("sheet").classList.remove("on");else sheet()}
 else if(t.id=="fab"){sheet();$("sheet").classList.add("on")}
 else if(t.id=="cl"||t.id=="sheet")$("sheet").classList.remove("on")});
-$("q").oninput=e=>{term=e.target.value.toLowerCase();render()};
+$("q").oninput=e=>{term=e.target.value.toLowerCase();if(term){cat="all";sub="all";ord="";menuOpen=""}nav();render()};
+document.addEventListener("change",e=>{if(e.target.id=="ord"){ord=e.target.value;render()}});
 $("send").onclick=()=>{const[n,t]=tot();let s=`Hola La Despensa del Oso 🐻🌱, quiero hacer este pedido${$("nom").value?" (a nombre de "+$("nom").value+")":""}:\n\n`;
 for(const i in cart)s+=`• ${cart[i]} × ${P[i].n} (${P[i].p}) – ${m(cart[i]*P[i].$)}\n`;s+=`\nTotal: ${m(t)}`+(t>=MIN?"\n🎁 Califico para el regalo sorpresa":"");
 window.open("https://wa.me/"+WA+"?text="+encodeURIComponent(s),"_blank")};
-chips();render();
+nav();render();
 </script></body></html>
