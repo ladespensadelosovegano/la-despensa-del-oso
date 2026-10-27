@@ -127,7 +127,7 @@ s:["Suplementos","💪",[
 ["Proteína De Arverja Aislada Vegana",["Chocolate",43],["Caramelo",44]]]],
 d:["Postres","🧁",[42]],
 o:["Otros","🧂",[16,36,39]]};
-const subs=k=>Array.isArray(C[k][2]&&C[k][2][0])?C[k][2]:null;
+const subs=k=>{const e=C[k][2]&&C[k][2][0];return Array.isArray(e)&&Array.isArray(e[1])&&typeof e[1][0]!="string"?C[k][2]:null};
 const gid=x=>typeof x=="number"?[x]:x.slice(1).map(v=>v[1]);
 const ids=k=>subs(k)?subs(k).flatMap(s=>s[1].flatMap(gid)):(C[k][2]||[]).flatMap(gid);
 const txt=x=>(typeof x=="number"?P[x-1].n+P[x-1].p:x[0]+x.slice(1).map(v=>v[0]).join("")+P[x[1][1]-1].p).toLowerCase();
@@ -154,7 +154,7 @@ const M=$("menu");M.className=menuOpen?"on":"";M.innerHTML=menuOpen?`<div class=
 function ctl(p){const q=cart[p.i]||0;return q?`<div class="qty"><button data-m="${p.i}">−</button>${q}<button data-a="${p.i}">+</button></div>`:`<button class="add" data-a="${p.i}">Agregar</button>`}
 function img(p){const z=p.c=="z"?"combo-"+(p.i-PR.length+1):String(p.i+1).padStart(2,"0");return `<img src="img/${z}.jpg" alt="${p.n}" loading="lazy" onerror="if(!this.dataset.t){this.dataset.t=1;this.src='img/${z}.png'}else{this.parentNode.textContent='${C[p.c][1]}'}">`}
 const card=p=>`<div class="card"><div class="art">${img(p)}</div><div class="bd"><div class="nm">${p.n}</div><div class="pr">${p.p}</div><div class="row"><span class="price">${p.$?m(p.$):"Consultar"}</span>${ctl(p)}</div></div></div>`;
-const secs=k=>k=="z"?[[null,P.filter(p=>p.c=="z").map(p=>p.i+1)]]:(subs(k)||[[null,ids(k)]]);
+const secs=k=>k=="z"?[[null,P.filter(p=>p.c=="z").map(p=>p.i+1)]]:(subs(k)||[[null,C[k][2]||[]]]);
 const grid=L=>`<div class="grid">${L.map(x=>typeof x=="number"?card(P[x-1]):gcard(x)).join("")}</div>`;
 const filt=l=>{const L=l.filter(x=>txt(x).includes(term));if(ord)L.sort(cmp);return L};
 const soon=k=>`<div class="soon">${C[k][1]} Muy pronto: ${k=="z"?"combos especiales para ti":"nuevos productos"}</div>`;
