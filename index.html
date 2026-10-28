@@ -119,9 +119,16 @@ p:["Carnes vegetales","🥩",[
 ["Carne de arvejas",[14,13,11,12]],
 ["Hamburguesas y milanesas",[1,3,2]],
 ["Embutidos",[6,7,8]],
-["Albóndigas",[5,10]],
-["Nuggets",[4,9]]]],
-f:["Panadería, Despensa y Untables","🌾",[38,37,33,34,35]],
+["Albóndigas",[10,5]],
+["Nuggets",[9,4]]]],
+f:["Panadería, Despensa y Untables","🌾",[
+["Despensa",[
+["Fideos integrales",["Espinaca",34],["Kiwicha",33],["Pimiento",35]],
+38,
+46,
+37]],
+["Untables","🫙"],
+["Panadería","🍞"]]]         
 b:["Bebidas vegetales","🥛",[40,41]],
 s:["Suplementos","💪",[
 ["Proteína De Arverja Aislada Vegana",["Chocolate",43],["Caramelo",44]],
@@ -140,7 +147,7 @@ const PR=[
 ["Carne de soya tipo Bistec","Bolsa 500 g",21,"c"],["Gluten de trigo","Bolsa 500 g",15,"c"],["Soya tipo filete pollo","Bolsa 500 g",15,"c"],["Soya tipo filete res","Bolsa 500 g",15,"c"],["Soya pollo trozos","Bolsa 500 g",14,"c"],["Soya res trozos","Bolsa 500 g",14,"c"],["Soya pollo molido","Bolsa 500 g",14,"c"],["Soya res molida","Bolsa 500 g",14,"c"],["Soya pollo tiras","Bolsa 500 g",14,"c"],["Soya res tiras","Bolsa 500 g",14,"c"],["Soya tipo filete pollo","Caja 100 g",6.5,"c"],["Soya tipo filete res","Caja 100 g",6.5,"c"],["Soya pollo trozos","Caja 150 g",6,"c"],["Soya res trozos","Caja 150 g",6,"c"],["Soya pollo molido","Caja 150 g",6,"c"],["Soya res molida","Caja 150 g",6,"c"],["Soya pollo tiras","Caja 150 g",6,"c"],["Soya res tiras","Caja 150 g",6,"c"],
 ["Fideos integrales de kiwicha","Caja 250 g",7,"d"],["Fideos integrales de espinaca","Caja 250 g",7,"d"],["Fideos integrales de pimiento","Caja 250 g",7,"d"],
 ["Sal negra","250 g",12,"e"],["Kañihua, harina seleccionada","Bolsa ziploc 200 g",9,"e"],["Harina de garbanzo","250 g",7,"e"],
-["Agar agar","Presentación a consultar",0,""],["Leche de almendras","1 litro",12.50,""],["Leche de avena","1 litro",10,""],["Alfajor argentino vegano","1 porción",6,""],["Proteína De Arverja Aislada Vegana Chocolate","Contenido 1.2 kg 35 servicios",100,"s"],["Proteína De Arverja Aislada Vegana Caramelo","Contenido 1.2 kg 35 servicios",100,"s"],["Creatina Monohidratada 200 Mesh","Contenido 500 g",120,"s"]
+["Agar agar","Presentación a consultar",0,""],["Leche de almendras","1 litro",12.50,""],["Leche de avena","1 litro",10,""],["Alfajor argentino vegano","1 porción",6,""],["Proteína De Arverja Aislada Vegana Chocolate","Contenido 1.2 kg 35 servicios",100,"s"],["Proteína De Arverja Aislada Vegana Caramelo","Contenido 1.2 kg 35 servicios",100,"s"],["Creatina Monohidratada 200 Mesh","Contenido 500 g",120,"s"],["Gluten de trigo","Contenido 500 g",20,"d"]
 ];
 const P=PR.concat(COMBOS.map(c=>[c[0],c[1],c[2],"z"])).map((p,i)=>({i,n:p[0],p:p[1],$:p[2],c:p[3]}));
 for(const k in C)ids(k).forEach(n=>P[n-1].c=k);
