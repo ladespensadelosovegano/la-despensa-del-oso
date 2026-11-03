@@ -111,6 +111,9 @@ h3{margin:16px 4px 8px;font-size:1rem;color:var(--g2)}.chips:empty{display:none}
 </footer>
 <script>
 const WA="51979547491";const MIN=50; // WhatsApp de pedidos y monto mínimo para el regalo
+// ===== AGOTADOS: pon aquí los números de los productos sin stock =====
+const AGOTADOS=[5,12,30];
+const OUT=new Set(AGOTADOS);
 // ===== COMBOS: agrega aquí los tuyos: ["Nombre","Descripción",precio] =====
 const COMBOS=[
 // ["Combo Burger Día","2 hamburguesas de carne + 1 chorizo vegano",60],
@@ -205,14 +208,19 @@ const card = p => {
 }; 
 const secs=k=>k=="z"?[[null,P.filter(p=>p.c=="z").map(p=>p.i+1)]]:(subs(k)||[[null,C[k][2]||[]]]);
 const grid=L=>`<div class="grid">${L.map(x=>typeof x=="number"?card(P[x-1]):gcard(x)).join("")}</div>`;
-const filt=l=>{const L=l.filter(x=>txt(x).includes(term));if(ord)L.sort(cmp);return L};
+const av=x=>{
+  if(typeof x=="number")return OUT.has(x)?null:x;
+  const v=x.slice(1).filter(v=>!OUT.has(v[1]));   // variantes con stock
+  return v.length?[x[0],...v]:null;                // si no queda ninguna, se oculta el grupo
+};
+const filt=l=>{const L=l.map(av).filter(Boolean).filter(x=>txt(x).includes(term));if(ord)L.sort(cmp);return L};  
 const soon=k=>`<div class="soon">${C[k][1]} Muy pronto: ${k=="z"?"combos especiales para ti":"nuevos productos"}</div>`;
 function render(){let h="";
 if(cat=="all"){for(const k in C){const S=secs(k);let b="";for(const[sn,l]of S){const L=filt(l);if(L.length)b+=(sn?`<h3>${sn}</h3>`:"")+grid(L)}
 if(b)h+=`<h2>${C[k][0]}</h2>`+b;else if(!term&&S.every(s=>!s[1].length))h+=`<h2>${C[k][0]}</h2>`+soon(k)}}
 else{const S=secs(cat),nm=C[cat][0],sh=sub=="all"?S:S.filter(s=>s[0]==sub);let b="",c=0;
 for(const[sn,l]of sh){const L=filt(l);c+=L.length;if(L.length)b+=(sn&&sub=="all"?`<h3>${sn}</h3>`:"")+grid(L)}
-if(!c&&S.every(s=>!s[1].length))b=soon(cat);
+if(!c&&!term)b=soon(cat);
 const o=(v,n)=>`<option value="${v}"${ord==v?" selected":""}>${n}</option>`;
 h=`<div class="banner"><h1>${sub=="all"?nm:sub}</h1></div><div class="bc"><a data-bc="home">Inicio</a> › ${sub=="all"?`<span>${nm}</span>`:`<a data-bc="cat">${nm}</a> › <span>${sub}</span>`}</div><div class="tb"><span>${c} PRODUCTO${c==1?"":"S"}</span><label>ORDENAR POR <select id="ord">${o("","Relevancia")}${o("asc","Precio: de menor a mayor")}${o("desc","Precio: de mayor a menor")}</select></label></div>`+b}
 $("list").innerHTML=h||"<p style='text-align:center;color:var(--mu)'>No encontramos ese producto.</p>";fab()}
