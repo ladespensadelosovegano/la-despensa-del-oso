@@ -85,7 +85,7 @@ h3{margin:16px 4px 8px;font-size:1rem;color:var(--g2)}.chips:empty{display:none}
 .tb{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin:6px 4px 12px;color:var(--mu);font-size:.85rem;font-weight:700}
 .tb select{border:0;background:transparent;color:var(--tx);font-weight:800;font-size:.9rem;cursor:pointer;font-family:inherit}
 </style></head><body>
-<div class="top">🎁 Regalo sorpresa en compras desde S/ 50 · 🚚 Envíos a todo el Perú</div>
+<div class="top">🎁 Regalo sorpresa en compras desde S/ 100 · 🚚 Envíos a todo el Perú</div>
 <header><img src="img/logo.jpg" alt="La Despensa del Oso"></header>
 <div class="hero"><h1>Catálogo de productos</h1><p>Tienda virtual · Envíos a todo el Perú.<br>Productos veganos en un solo lugar. Arma tu pedido y envíalo por WhatsApp.</p></div>
 <div class="bar"><input id="q" type="search" placeholder="Buscar producto…"></div>
@@ -98,21 +98,21 @@ h3{margin:16px 4px 8px;font-size:1rem;color:var(--g2)}.chips:empty{display:none}
 <div class="ft-logo"><img src="img/logo.jpg" alt="La Despensa del Oso"><p>Stock sujetos a disponibilidad</p></div>
 <div class="ft-c"><h4>CONTACTO</h4>
 <div class="soc">
-<a href="https://wa.me/51979547491" target="_blank" rel="noopener" aria-label="WhatsApp"><svg viewBox="0 0 24 24"><path d="M3 21l1.6-4.6A9 9 0 1 1 8 19.5z"/><path d="M9 8.5c0 3 3 6 6 6l1-1.5-2-1-1 .8c-.8-.4-1.6-1.2-2-2l.8-1-1-2z"/></svg></a>
+<a href="https://wa.me/51958740348" target="_blank" rel="noopener" aria-label="WhatsApp"><svg viewBox="0 0 24 24"><path d="M3 21l1.6-4.6A9 9 0 1 1 8 19.5z"/><path d="M9 8.5c0 3 3 6 6 6l1-1.5-2-1-1 .8c-.8-.4-1.6-1.2-2-2l.8-1-1-2z"/></svg></a>
 <a href="https://facebook.com/TU_PAGINA" target="_blank" rel="noopener" aria-label="Facebook"><svg viewBox="0 0 24 24"><path d="M15 3h-2a4 4 0 0 0-4 4v3H6v4h3v7h4v-7h3l1-4h-4V7a1 1 0 0 1 1-1h2z"/></svg></a>
 <a href="https://instagram.com/ladespensadeloso.pe" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r=".6"/></svg></a>
 <a href="https://tiktok.com/@ladespensadeloso.pe" target="_blank" rel="noopener" aria-label="TikTok"><svg viewBox="0 0 24 24"><path d="M14 3v11.5a3.5 3.5 0 1 1-3.5-3.5"/><path d="M14 3c.4 2.4 1.9 4 4.5 4.2"/></svg></a>
 <a href="https://youtube.com/@TU_CANAL" target="_blank" rel="noopener" aria-label="YouTube"><svg viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="4"/><path d="M10 9l5 3-5 3z"/></svg></a>
 </div>
-<a class="ln" href="tel:+51979547491">📞 +51 979 547 491</a>
+<a class="ln" href="tel:+51958740348">📞 +51 958 740 348</a>
 <a class="ln" href="mailto:ladespensadeloso@gmail.com">✉️ ladespensadeloso@gmail.com</a>
 </div></div>
 <div class="ft-b">© 2026 La Despensa del Oso · Tienda virtual · Envíos a todo el Perú</div>
 </footer>
 <script>
-const WA="51979547491";const MIN=50; // WhatsApp de pedidos y monto mínimo para el regalo
+const WA="51958740348";const MIN=100; // WhatsApp de pedidos y monto mínimo para el regalo
 // ===== AGOTADOS: pon aquí los números de los productos sin stock =====
-const AGOTADOS=[12,39,40,41];
+const AGOTADOS=[12,39,40,41,52];
 const OUT=new Set(AGOTADOS);
 // ===== COMBOS: agrega aquí los tuyos: ["Nombre","Descripción",precio] =====
 const COMBOS=[
@@ -158,12 +158,12 @@ const txt=x=>(typeof x=="number"?P[x-1].n+P[x-1].p:x[0]+x.slice(1).map(v=>v[0]).
 const SEL={};
 const gcard=g=>{const k=g[1][1],s=SEL[k]||k,p=P[s-1];return `<div class="card"><div class="art">${img(p)}</div><div class="bd"><div class="nm">${g[0]}</div><div class="var">${g.slice(1).map(v=>`<button class="${v[1]==s?"on":""}" data-g="${k}" data-v="${v[1]}">${v[0]}</button>`).join("")}</div><div class="pr">${p.p}</div><div class="row"><span class="price">${p.$?m(p.$):"Consultar"}</span>${ctl(p)}</div></div></div>`};
 const PR=[
-["Hamburguesa de carne","390 g",25,"a"],["Milanesa","400 g",25,"a"],["Hamburguesa de pollo","400 g",25,"a"],["Nuggets","500 g",28,"a"],["Albóndigas","500 g",28,"a"],["Salchichas veganas clásicas","500 g",22,"a"],["Salchichas veganas con finas hierbas","500 g",23,"a"],["Chorizo vegano","350 g",19,"a"],["Nuggets","300 g",20,"a"],["Albóndigas","300 g",20,"a"],
-["Carne de arvejas tipo nuggets","500 g",35,"b"],["Carne de arvejas tipo molida","500 g",35,"b"],["Carne de arvejas tipo nuggets","250 g",19,"b"],["Carne de arvejas tipo nuggets","Caja 100 g",10,"b"],
-["Carne de soya tipo Bistec","500 g",21,"c"],["Gluten de trigo","500 g",15,"c"],["Soya tipo filete","500 g",15,"c"],["Soya tipo filete res","500 g",15,"c"],["Soya pollo trozos","500 g",14,"c"],["Soya res trozos","500 g",14,"c"],["Soya pollo molido","500 g",14,"c"],["Soya res molida","500 g",14,"c"],["Soya pollo tiras","500 g",14,"c"],["Soya res tiras","500 g",14,"c"],["Soya tipo filete pollo","Caja 100 g",6.5,"c"],["Soya tipo filete","Caja 100 g",6.5,"c"],["Soya pollo trozos","Caja 150 g",6,"c"],["Soya res trozos","Caja 150 g",6,"c"],["Soya pollo molido","Caja 150 g",6,"c"],["Soya res molida","Caja 150 g",6,"c"],["Soya pollo tiras","Caja 150 g",6,"c"],["Soya res tiras","Caja 150 g",6,"c"],
-["Fideos integrales de kiwicha","Caja 250 g",7,"d"],["Fideos integrales de espinaca","Caja 250 g",7,"d"],["Fideos integrales de pimiento","Caja 250 g",7,"d"],
-["Sal negra","250 g",12,"e"],["Kañihua, harina seleccionada","200 g",9,"e"],["Harina de garbanzo","250 g",7,"e"],
-["Agar agar","Presentación a consultar",0,""],["Leche de almendras","1 litro",12.50,"b"],["Leche de avena","1 litro",10,"b"],["Alfajor argentino vegano","1 porción",6,""],["Proteína De Arverja Aislada Vegana Chocolate","Contenido 1.2 kg 35 servicios",100,"s"],["Proteína De Arverja Aislada Vegana Caramelo","Contenido 1.2 kg 35 servicios",100,"s"],["Creatina Monohidratada 200 Mesh","Contenido 500 g",120,"s"],["Carne de arvejas tipo molida","Caja 100 g",10,""],["Turron integral vegano Pasas e higos","250 g",12.5,""],["Turron integral vegano Arándanos y damascos","250 g",13,""],["Mix Salvax","250 g",13,""],["Mix Omega MAX","200 g",13,""],["Mix Regia","250 g",13,""],["Granola","300 g",13,""]
+["Hamburguesa de carne","390 g",22,"a"],["Milanesa","400 g",22,"a"],["Hamburguesa de pollo","400 g",22,"a"],["Nuggets","500 g",30,"a"],["Albóndigas","500 g",30,"a"],["Salchichas veganas clásicas","500 g",22,"a"],["Salchichas veganas con finas hierbas","500 g",23,"a"],["Chorizo vegano","350 g",19.5,"a"],["Nuggets","300 g",20,"a"],["Albóndigas","300 g",20,"a"],
+["Carne de arvejas tipo nuggets","500 g",34.5,"b"],["Carne de arvejas tipo molida","500 g",34.5,"b"],["Carne de arvejas tipo nuggets","250 g",19,"b"],["Carne de arvejas tipo nuggets","Caja 100 g",9.5,"b"],
+["Carne de soya tipo Bistec","500 g",21.5,"c"],["Gluten de trigo","500 g",15,"c"],["Soya tipo filete pollo","500 g",15.5,"c"],["Soya tipo filete res","500 g",15.5,"c"],["Soya pollo trozos","500 g",14.5,"c"],["Soya res trozos","500 g",14.5,"c"],["Soya pollo molido","500 g",14.5,"c"],["Soya res molida","500 g",14.5,"c"],["Soya pollo tiras","500 g",14.5,"c"],["Soya res tiras","500 g",14.5,"c"],["Soya tipo filete pollo","Caja 100 g",6.5,"c"],["Soya tipo filete res","Caja 100 g",6.5,"c"],["Soya pollo trozos","Caja 150 g",6,"c"],["Soya res trozos","Caja 150 g",6,"c"],["Soya pollo molido","Caja 150 g",6,"c"],["Soya res molida","Caja 150 g",6,"c"],["Soya pollo tiras","Caja 150 g",6,"c"],["Soya res tiras","Caja 150 g",6,"c"],
+["Fideos integrales de kiwicha","Caja 250 g",6.5,"d"],["Fideos integrales de espinaca","Caja 250 g",6.5,"d"],["Fideos integrales de pimiento","Caja 250 g",6.5,"d"],
+["Sal negra","250 g",12,"e"],["Kañihua, harina seleccionada","200 g",9,"e"],["Harina de garbanzo","250 g",9,"e"],
+["Agar agar","Presentación a consultar",0,""],["Leche de almendras","1 litro",12.50,"b"],["Leche de avena","1 litro",10,"b"],["Alfajor argentino vegano","1 porción",6,""],["Proteína De Arverja Aislada Vegana Chocolate","Contenido 1.2 kg 35 servicios",100,"s"],["Proteína De Arverja Aislada Vegana Caramelo","Contenido 1.2 kg 35 servicios",100,"s"],["Creatina Monohidratada 200 Mesh","Contenido 500 g",120,"s"],["Carne de arvejas tipo molida","Caja 100 g",9.5,""],["Turron integral vegano Pasas e higos","250 g",12.5,""],["Turron integral vegano Arándanos y damascos","250 g",13,""],["Mix Salvax","250 g",9.5,""],["Mix Omega MAX","200 g",8.5,""],["Mix Regia","250 g",9.5,""],["Granola","300 g",5,""]
 ];
 const P=PR.concat(COMBOS.map(c=>[c[0],c[1],c[2],"z"])).map((p,i)=>({i,n:p[0],p:p[1],$:p[2],c:p[3]}));
 for(const k in C)ids(k).forEach(n=>P[n-1].c=k);
